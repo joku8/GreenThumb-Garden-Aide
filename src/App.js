@@ -1,5 +1,8 @@
+import { 
+  Grid
+} from '@mui/material';
+
 import React from 'react';
-import styles from './App.css';
 import Header from './components/Header';
 import HarvestTracker from './components/HarvestTracker';
 import Calendar from './components/Calendar';
@@ -9,24 +12,23 @@ import TaskManager from './components/TaskManager';
 function App() {
   return (
     <div>
-      <Header />
-
-      <div className={styles.gridContainer}>
-        <div className={styles.gridItem}>
-          <HarvestTracker />
-        </div>
-        <div className={styles.gridItem}>
-          <Calendar />
-        </div>
-        <div className={styles.gridItem}>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Header />
+        </Grid>
+        <Grid item xs={6}>
           <SeedStorage />
-        </div>
-        <div className={styles.gridItem}>
+        </Grid>
+        <Grid item xs={6}>
+          <HarvestTracker />
+        </Grid>
+        <Grid item xs={8}>
+          <Calendar />
+        </Grid>
+        <Grid item xs={4}>
           <TaskManager />
-        </div>
-      </div>
-
-      {/* Add the rest of your app's content */}
+        </Grid>
+      </Grid>
     </div>
   );
 }

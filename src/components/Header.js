@@ -1,11 +1,16 @@
+import {
+  Typography
+} from '@mui/material';
+
 import React from 'react';
 import styles from './Header.module.css';
 
 const Header = () => {
   return (
     <header className={styles.header}>
-      <h1 className={styles.title}>GreenThumb Garden Helper</h1>
-      {/* Add any additional content or navigation elements */}
+      <Typography variant="h2" color="inherit" align="center">
+        Garden Assistant
+      </Typography>
     </header>
   );
 };

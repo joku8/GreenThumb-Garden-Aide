@@ -1,3 +1,9 @@
+import {
+  Box, 
+  Typography,
+  Paper
+} from '@mui/material';
+
 import React from 'react';
 
 const TaskManager = () => {
@@ -5,8 +11,11 @@ const TaskManager = () => {
 
   return (
     <div>
-      <h2>Task Manager</h2>
-      {/* Add your component's content here */}
+      <Box component={Paper} sx={{ width: '100%', height: '100%', margin: 'auto' }}>
+        <Typography variant="h4" component="h2" margin='0px 0px 0px 20px'>
+          Task Manager
+        </Typography>
+      </Box>
     </div>
   );
 };
