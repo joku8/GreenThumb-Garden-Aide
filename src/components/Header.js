@@ -9,7 +9,7 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <Typography variant="h2" color="inherit" align="center">
-        Garden Assistant
+        GreenThumb Garden Assistant
       </Typography>
     </header>
   );

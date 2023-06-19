@@ -1,23 +1,26 @@
-# GreenThumb Garden Helper
-
-GreenThumb Garden Helper is a React-based web application that aims to assist gardeners with various garden management tasks and help organize their gardening journey.
+# GreenThumb Garden Assistant
+GreenThumb Garden Assistant is a React-based web application built with Material-UI (MUI) that is designed to assist gardeners in managing their gardens effectively. It offers a range of features to help you stay organized and make the most of your gardening journey.
 
 ## Features
+### Seed Vault
+The Seed Vault feature allows you to keep track of your seed inventory. You can record details about each seed packet, such as the type of plant, variety, quantity, and any additional notes. This way, you can easily search and reference your seed collection, preventing duplicate purchases and ensuring you have a tidy record of all available seeds.
 
-- Seed Storage: Keep track of your seed inventory, and search through at the beginning of each season so you dont end up buying repeats!
+### Harvest Tracker
+With the Harvest Tracker, you can monitor and record all the produce that comes out of your garden during the growing season. This feature enables you to track the quantity and value of your harvests, giving you insights into the productivity of your garden. It's a useful tool for evaluating the cost-effectiveness of growing your own food.
 
-- Gardening Calendar: Plan and manage your gardening activities, including planting, watering, fertilizing, and harvesting. Get reminders and notifications for important gardening tasks.
+### Gardening Calendar
+The Gardening Calendar feature helps you plan and manage your gardening activities throughout the year. You can visualize the sowing, growing, and harvest periods for all of your crops, allowing you to plan succession plantings and optimize your garden's productivity. The calendar provides reminders and notifications for important gardening tasks, ensuring you never miss a crucial activity.
 
-- Harvest Tracker: Keep track of all the produce that comes out of your garden. How much value are you getting?
-
-- Garden Tracker: Keep track of your garden's layout, plant inventory, and progress. Record notes and observations for each plant and monitor their growth over time.
-
-## Dependencies
-
+### Task Manager
+The Task Manager feature allows you to set tasks and reminders for yourself. You can create to-do lists and assign specific tasks to different dates. The app sends text notifications to your phone as reminders, ensuring you stay on top of your gardening tasks and never forget an important activity.
 
 ## Installation
+To install GreenThumb Garden Assistant, follow these steps:
 
-1. Clone the repository:
+### Clone the repository:
 
-   ```shell
-   git clone https://github.com/your-username/greenthumb-garden-helper.git
+```shell
+git clone https://github.com/your-username/greenthumb-garden-helper.git
+```
+
+Now you're ready to start using GreenThumb Garden Assistant, built with MUI, and enjoy its features to assist you in managing your garden effectively. Happy gardening!
