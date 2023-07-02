@@ -2,18 +2,35 @@ import React from 'react';
 import { 
   Box,
   Typography,
-  Paper
+  Paper,
+  Stack,
 } from '@mui/material';
 
+const styles = {
+  width: '95%',
+  height: '350px',
+  padding: '10px 20px 10px 20px',
+  backgroundColor: '#e5e5e5',
+  borderRadius: '20px'
+}
+
 const Calendar = () => {
-  // Component logic and state management can be added here
 
   return (
     <div>
-      <Box component={Paper} sx={{ width: '100%', height: '100%', margin: 'auto' }}>
-        <Typography variant="h4" component="h2" margin='0px 0px 0px 20px'>
-          Calendar
-        </Typography>
+      <Box 
+        component={Paper} 
+        elevation={2}
+        sx={styles}
+      >
+        <Stack direction="column">
+          <Typography 
+            variant="h4"
+            fontWeight="lighter"
+          >
+            Calendar
+          </Typography>
+        </Stack>
       </Box>
     </div>
   );

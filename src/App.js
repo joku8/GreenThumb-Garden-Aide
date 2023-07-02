@@ -12,7 +12,10 @@ import TaskManager from './components/TaskManager';
 function App() {
   return (
     <div>
-      <Grid container spacing={3}>
+      <Grid container 
+      spacing={3}
+      padding="20px 40px 10px 40px"
+      >
         <Grid item xs={12}>
           <Header />
         </Grid>
