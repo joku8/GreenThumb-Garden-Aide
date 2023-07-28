@@ -8,7 +8,8 @@ import {
   Table,
   TableHead,
   TableRow,
-  TableCell
+  TableCell,
+  TableBody
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -23,7 +24,11 @@ const styles = {
   overflow: 'scroll',
 }
 
-const SeedStorage = () => {
+const SeedStorage = ({
+  seeds,
+  setSeeds,
+  addSeed,
+}) => {
   // Component logic and state management can be added here
 
   return (
@@ -33,67 +38,79 @@ const SeedStorage = () => {
         elevation={2}
         sx={styles}
       >
-      <Grid container spacing={1}>
-        <Grid item xs={12}>
-          <Stack
-            direction="row"
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Typography 
-            variant="h4"
-            fontWeight="lighter"
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <Stack
+              direction="row"
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
             >
-              Seed Storage
-            </Typography>
-            <IconButton
-              onClick={() => {console.log("Add Seed Storage"); }}
-            >
-              <AddIcon fontSize='large'/>
-            </IconButton>
-          </Stack>
+              <Typography 
+              variant="h4"
+              fontWeight="lighter"
+              >
+                Seed Storage
+              </Typography>
+              <IconButton
+                onClick={() => { addSeed()}}
+              >
+                <AddIcon fontSize='large'/>
+              </IconButton>
+            </Stack>
+          </Grid>
+          <Grid item xs={12}>
+          <Table component={Paper}>
+            <TableHead>
+              <TableRow>
+                <TableCell
+                  align='center'
+                  sx={{fontWeight: 'bold'}}
+                >
+                  Plant
+                </TableCell>
+                <TableCell
+                  align='center'
+                  sx={{fontWeight: 'bold'}}
+                >
+                  Cultivar
+                </TableCell>
+                <TableCell
+                  align='center'
+                  sx={{fontWeight: 'bold'}}
+                >
+                  Source
+                </TableCell>
+                <TableCell
+                  align='center'
+                  sx={{fontWeight: 'bold'}}
+                >
+                  Year
+                </TableCell>
+                <TableCell
+                  align='center'
+                  sx={{fontWeight: 'bold'}}
+                >
+                  Notes
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+                {seeds.map((seed) => (
+                  <TableRow key={seed.id}>
+                    <TableCell align='center'>{seed.plant}</TableCell>
+                    <TableCell align='center'>{seed.cultivar}</TableCell>
+                    <TableCell align='center'>{seed.source}</TableCell>
+                    <TableCell align='center'>{seed.year}</TableCell>
+                    <TableCell align='center'>
+                      {seed.notes}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+          </Table>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-        <Table component={Paper}>
-          <TableHead>
-            <TableRow>
-              <TableCell
-                align='center'
-                sx={{fontWeight: 'bold'}}
-              >
-                Plant
-              </TableCell>
-              <TableCell
-                align='center'
-                sx={{fontWeight: 'bold'}}
-              >
-                Cultivar
-              </TableCell>
-              <TableCell
-                align='center'
-                sx={{fontWeight: 'bold'}}
-              >
-                Source
-              </TableCell>
-              <TableCell
-                align='center'
-                sx={{fontWeight: 'bold'}}
-              >
-                Year
-              </TableCell>
-              <TableCell
-                align='center'
-                sx={{fontWeight: 'bold'}}
-              >
-                Notes
-              </TableCell>
-            </TableRow>
-          </TableHead>
-        </Table>
-        </Grid>
-      </Grid>
-        
       </Box>
     </div>
   );

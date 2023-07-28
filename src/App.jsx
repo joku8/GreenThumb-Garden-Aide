@@ -8,6 +8,11 @@ import HarvestTracker from './components/HarvestTracker';
 import Calendar from './components/Calendar';
 import SeedStorage from './components/SeedStorage';
 import TaskManager from './components/TaskManager';
+import AddSeed from './components/modal/AddSeed';
+
+import {
+  getCurrentDateTimeAsId
+} from './utils'
 
 function App() {
   /** Stores the seeds stored
@@ -15,6 +20,21 @@ function App() {
    *  Plant, Cultivar, Source, Year, Notes
    */
   const [seedBank, setSeedBank] = useState([]);
+  const addToSeedBank = (seedObject) => {
+    const addObject = {
+      id: getCurrentDateTimeAsId,
+      plant: seedObject.plant,
+      cultivar: seedObject.cultivar,
+      source: seedObject.source,
+      year: seedObject.year,
+      notes: seedObject.notes,
+    }
+    setSeedBank((prevSeedBank) => [...prevSeedBank, addObject]);
+  };
+  
+  const [showAddSeed, setShowAddSeed] = useState(false);
+  const handleOpenAddSeed = () => { setShowAddSeed(true); };
+  const handleCloseAddSeed = () => { setShowAddSeed(false); };
 
   /** Stores garden harvest
    *  Array of objects with the following keys:
@@ -47,6 +67,7 @@ function App() {
           <SeedStorage 
             seeds={seedBank}
             setSeeds={setSeedBank}
+            addSeed={handleOpenAddSeed}
           />
         </Grid>
         <Grid item xs={6}>
@@ -68,6 +89,11 @@ function App() {
           />
         </Grid>
       </Grid>
+      <AddSeed 
+        showModal={showAddSeed}
+        handleCloseModal={handleCloseAddSeed}
+        addSeedObj={addToSeedBank}
+      />
     </div>
   );
 }
