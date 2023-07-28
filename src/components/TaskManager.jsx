@@ -1,8 +1,11 @@
 import {
   Box, 
   Typography,
-  Paper
+  Paper,
+  Stack,
+  IconButton
 } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
 import React from 'react';
 
@@ -23,12 +26,24 @@ const TaskManager = () => {
         elevation={2}
         sx={styles}
       >
-        <Typography 
+       <Stack
+          direction="row"
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Typography 
           variant="h4"
           fontWeight="lighter"
-        >
-          Task Manager
-        </Typography>
+          >
+            Task Manager
+          </Typography>
+          <IconButton
+            onClick={() => {console.log("Add Task"); }}
+          >
+            <AddIcon fontSize='large'/>
+          </IconButton>
+        </Stack>
       </Box>
     </div>
   );

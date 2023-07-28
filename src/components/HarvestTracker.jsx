@@ -1,8 +1,11 @@
 import { 
   Box,
+  IconButton,
   Paper,
+  Stack,
   Typography,
 } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
 import React from 'react';
 
@@ -23,12 +26,24 @@ const HarvestTracker = () => {
         elevation={2}
         sx={styles}
       >
-        <Typography 
+        <Stack
+          direction="row"
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Typography 
           variant="h4"
           fontWeight="lighter"
-        >
-          Harvest Tracker
-        </Typography>
+          >
+            Harvest Tracker
+          </Typography>
+          <IconButton
+            onClick={() => {console.log("Add Harvest"); }}
+          >
+            <AddIcon fontSize='large'/>
+          </IconButton>
+        </Stack>
       </Box>
     </div>
   );
