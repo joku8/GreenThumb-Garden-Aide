@@ -16,7 +16,7 @@ const styles = {
   borderRadius: "20px",
 };
 
-const Header = ({ seedBank, harvestBook, file, setFile }) => {
+const Header = ({ seedBank, harvestBook, file, setFile, snackbar }) => {
   const [autosaveOn, setAutosaveOn] = useState(false);
 
   const toggleAutosave = useCallback(() => {
@@ -29,6 +29,7 @@ const Header = ({ seedBank, harvestBook, file, setFile }) => {
       const ret = await writeDataToFile(data);
       if (ret.status === true) {
         setFile(ret.content);
+        snackbar("success", "File Created 🎉🎉🎉");
         return true;
       }
     } else {
@@ -38,7 +39,7 @@ const Header = ({ seedBank, harvestBook, file, setFile }) => {
       }
     }
     return false;
-  }, [file, seedBank, harvestBook, setFile]);
+  }, [file, seedBank, harvestBook, setFile, snackbar]);
 
   useEffect(() => {
     let intervalId;

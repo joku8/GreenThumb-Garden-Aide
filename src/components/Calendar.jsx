@@ -21,7 +21,7 @@ const Calendar = () => {
           justifyContent="space-between"
         >
           <Typography variant="h4" fontSize="28px" fontWeight="lighter">
-            Seed Storage
+            Calendar
           </Typography>
           <IconButton
             onClick={() => {

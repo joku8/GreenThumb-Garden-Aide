@@ -9,11 +9,30 @@ import TaskManager from "./components/TaskManager";
 import AddSeed from "./components/modal/AddSeed";
 import AddHarvest from "./components/modal/AddHarvest";
 
-import { readFileContents } from "./utils/utils";
+import { readFileContents, verifyObject } from "./utils/utils";
 
 import { v4 as uuidv4 } from "uuid";
+import Feedback from "./utils/Feedback";
 
 function App() {
+  // Global Snackbar
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [severity, setSeverity] = useState("info");
+  const [message, setMessage] = useState("");
+  const [snackbarKey, setSnackbarKey] = useState(0); // To manage the key prop
+
+  const handleSnackbarClose = () => {
+    setShowSnackbar(false);
+  };
+
+  const showCustomSnackbar = (severity, message) => {
+    setSeverity(severity);
+    setMessage(message);
+    setSnackbarKey((prevKey) => prevKey + 1); // Update the key to trigger Snackbar replacement
+    setShowSnackbar(true);
+  };
+
+  // File Hanlde Storage
   const [fileHandle, setFileHandle] = useState(null);
 
   /** Stores the seeds stored
@@ -31,6 +50,7 @@ function App() {
       notes: seedObject.notes,
     };
     setSeedBank((prevSeedBank) => [...prevSeedBank, addObject]);
+    showCustomSnackbar("success", "Seed added to the bank 🌾 !!");
   };
 
   const [showAddSeed, setShowAddSeed] = useState(false);
@@ -56,6 +76,7 @@ function App() {
       notes: harvestObject.notes,
     };
     setHarvestBook((prevHarvestBook) => [...prevHarvestBook, addObject]);
+    showCustomSnackbar("success", "Harvest recorded 🧑🏼‍🌾 !!");
   };
 
   const [showAddHarvest, setShowAddHarvest] = useState(false);
@@ -84,8 +105,16 @@ function App() {
         const ret = await readFileContents(fileHandle);
         if (ret.status === true) {
           const obj = JSON.parse(ret.contents);
+          if (!verifyObject(obj)) {
+            showCustomSnackbar("warning", "File could not be uploaded...");
+            return;
+          }
           setSeedBank(obj.seedStorage);
           setHarvestBook(obj.harvestBook);
+          showCustomSnackbar(
+            "Success",
+            "File uploaded successfuly 🌱🌱🌱 Let's get Growing!"
+          );
         }
       }
     };
@@ -102,6 +131,7 @@ function App() {
             harvestBook={harvestBook}
             file={fileHandle}
             setFile={setFileHandle}
+            snackbar={showCustomSnackbar}
           />
         </Grid>
         <Grid item xs={6}>
@@ -137,6 +167,13 @@ function App() {
         showModal={showAddHarvest}
         handleCloseModal={handleCloseAddHarvest}
         addHarvestObj={addToHarvestBook}
+      />
+      <Feedback
+        key={snackbarKey}
+        open={showSnackbar}
+        severity={severity}
+        message={message}
+        handleClose={handleSnackbarClose}
       />
     </div>
   );

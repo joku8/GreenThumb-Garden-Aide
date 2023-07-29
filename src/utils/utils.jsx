@@ -113,12 +113,24 @@ function objEquals(a, b) {
   return true;
 }
 
+const verifyObject = (obj) => {
+  const keys = Object.keys(obj);
+
+  // Check if the object has 'seedStorage' and 'harvestBook' keys
+  const hasSeedStorage = keys.includes("seedStorage");
+  const hasHarvestBook = keys.includes("harvestBook");
+
+  // Return true if both keys are present, otherwise return false
+  return hasSeedStorage && hasHarvestBook;
+};
+
 export {
   generateSavePackage,
   getCurrentDateTimeAsId,
   getExistingFileHandle,
   objEquals,
   readFileContents,
+  verifyObject,
   writeDataToFile,
   writeToExistingFile,
 };
