@@ -76,7 +76,7 @@ const Header = ({ seedBank, harvestBook, file, setFile }) => {
       >
         <Typography
           variant="h2"
-          fontSize="50px"
+          fontSize="40px"
           fontWeight="lighter"
           color="#ffffff"
         >

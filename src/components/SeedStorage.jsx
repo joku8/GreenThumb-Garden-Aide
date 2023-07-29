@@ -79,7 +79,7 @@ const SeedStorage = ({ seeds, setSeeds, addSeed }) => {
               alignItems="center"
               justifyContent="space-between"
             >
-              <Typography variant="h4" fontWeight="lighter">
+              <Typography variant="h4" fontSize="28px" fontWeight="lighter">
                 Seed Storage
               </Typography>
               <IconButton

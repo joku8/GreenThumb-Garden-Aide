@@ -74,7 +74,7 @@ const HarvestTracker = ({ harvest, setHarvest, addHarvest }) => {
               alignItems="center"
               justifyContent="space-between"
             >
-              <Typography variant="h4" fontWeight="lighter">
+              <Typography variant="h4" fontSize="28px" fontWeight="lighter">
                 Harvest Tracker
               </Typography>
               <IconButton
