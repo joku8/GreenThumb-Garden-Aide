@@ -17,7 +17,11 @@ const styles = {
   borderRadius: '20px'
 }
 
-const HarvestTracker = () => {
+const HarvestTracker = (
+  harvest,
+  setHarvest,
+  addHarvest,
+  ) => {
 
   return (
     <div>
@@ -39,7 +43,7 @@ const HarvestTracker = () => {
             Harvest Tracker
           </Typography>
           <IconButton
-            onClick={() => {console.log("Add Harvest"); }}
+            onClick={() => {addHarvest();}}
           >
             <AddIcon fontSize='large'/>
           </IconButton>
