@@ -1,6 +1,8 @@
 # GreenThumb Garden Assistant
 GreenThumb Garden Assistant is a React-based web application built with Material-UI (MUI) that is designed to assist gardeners in managing their gardens effectively. It offers a range of features to help you stay organized and make the most of your gardening journey.
 
+> Set up remote
+
 ## Features
 ### Seed Vault
 The Seed Vault feature allows you to keep track of your seed inventory. You can record details about each seed packet, such as the type of plant, variety, quantity, and any additional notes. This way, you can easily search and reference your seed collection, preventing duplicate purchases and ensuring you have a tidy record of all available seeds.
