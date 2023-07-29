@@ -12,6 +12,8 @@ import AddHarvest from "./components/modal/AddHarvest";
 import { getCurrentDateTimeAsId } from "./utils";
 
 function App() {
+  const [fileHandle, setFileHandle] = useState(null);
+
   /** Stores the seeds stored
    *  Array of objects with the following keys:
    *  Plant, Cultivar, Source, Year, Notes
@@ -78,7 +80,12 @@ function App() {
     <div>
       <Grid container spacing={3} padding="20px 40px 10px 40px">
         <Grid item xs={12}>
-          <Header />
+          <Header
+            seedBank={seedBank}
+            harvestBook={harvestBook}
+            file={fileHandle}
+            setFile={setFileHandle}
+          />
         </Grid>
         <Grid item xs={6}>
           <SeedStorage seeds={seedBank} addSeed={handleOpenAddSeed} />
