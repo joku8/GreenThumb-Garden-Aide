@@ -38,9 +38,24 @@ function App() {
 
   /** Stores garden harvest
    *  Array of objects with the following keys:
-   *  Item, Date, Amount, Units, Notes
+   *  Item, Date, Quantity, Units, Notes
    */
   const [harvestBook, setHarvestBook] = useState([]);
+  const addToHarvestBook = (harvestObject) => {
+    const addObject = {
+      id: getCurrentDateTimeAsId,
+      item: harvestObject.item,
+      date: harvestObject.date,
+      quantity: harvestObject.quantity,
+      units: harvestObject.units,
+      notes: harvestObject.notes,
+    }
+    setSeedBank((prevSeedBank) => [...prevSeedBank, addObject]);
+  };
+  
+  const [showAddHarvest, setShowAddHarvest] = useState(false);
+  const handleOpenAddHarvest = () => { setShowAddSeed(true); };
+  const handleCloseAddHarvest = () => { setShowAddSeed(false); };
 
   /** Stores garden tasks
    *  Array of objects with the following keys:
@@ -74,6 +89,7 @@ function App() {
           <HarvestTracker
             harvest={harvestBook}
             setHarvest={setHarvestBook}
+            addHarvest={handleOpenAddHarvest}
            />
         </Grid>
         <Grid item xs={8}>
