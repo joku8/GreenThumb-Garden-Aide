@@ -1,4 +1,12 @@
-import { Modal, TextField, Button, Box, Grid, Typography } from "@mui/material";
+import {
+  Modal,
+  TextField,
+  Button,
+  Box,
+  Grid,
+  Typography,
+  Autocomplete,
+} from "@mui/material";
 
 import React, { useState } from "react";
 
@@ -44,6 +52,8 @@ const AddSeed = ({ showModal, handleCloseModal, addHarvestObj }) => {
       notes: "",
     });
   };
+
+  const unitOptions = ["lb", "oz", "kg", "g", "count"];
 
   return (
     <Modal open={showModal} onClose={handleCloseModal}>
@@ -92,12 +102,18 @@ const AddSeed = ({ showModal, handleCloseModal, addHarvestObj }) => {
             />
           </Grid>
           <Grid item xs={6}>
-            <TextField
-              label="Units"
-              name="units"
-              value={harvestObj.units}
-              onChange={handleInputChange}
-              fullWidth
+            <Autocomplete
+              freeSolo
+              options={unitOptions}
+              onInputChange={(event, newValue) => {
+                setHarvestObj((prevValues) => ({
+                  ...prevValues,
+                  units: newValue,
+                }));
+              }}
+              renderInput={(params) => (
+                <TextField {...params} label="Units" fullWidth />
+              )}
             />
           </Grid>
           <Grid item xs={12}>

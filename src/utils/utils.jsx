@@ -20,8 +20,6 @@ const generateSavePackage = (seedStorage, harvestBook) => {
   });
 };
 
-// Write data to File Handle and return the handle
-// index.js
 const writeDataToFile = async (data) => {
   try {
     const options = {
@@ -61,9 +59,66 @@ const writeToExistingFile = async (fileHandle, data) => {
   }
 };
 
+const getExistingFileHandle = async () => {
+  try {
+    const options = {
+      types: [
+        {
+          description: "JSON Files",
+          accept: {
+            "application/json": [".json"],
+          },
+        },
+      ],
+    };
+
+    const [fileHandle] = await window.showOpenFilePicker(options);
+    console.log("File handle obtained successfully!");
+    return { status: true, content: fileHandle };
+  } catch (error) {
+    console.error("Error getting file handle:", error);
+    return { status: false, content: error.message };
+  }
+};
+
+const readFileContents = async (fileHandle) => {
+  try {
+    const file = await fileHandle.getFile();
+    const contents = await file.text();
+    console.log("File contents read successfully!");
+    return { status: true, contents: contents };
+  } catch (error) {
+    console.error("Error reading file contents:", error);
+    return { status: false, contents: null };
+  }
+};
+
+function objEquals(a, b) {
+  const keysA = Object.keys(a);
+  const keysB = Object.keys(b);
+
+  // Check if the objects have the same number of keys
+  if (keysA.length !== keysB.length) {
+    return false;
+  }
+
+  // Check if all keys in object A are present in object B and have the same values
+  for (const key of keysA) {
+    if (a[key] !== b[key]) {
+      return false;
+    }
+  }
+
+  // If all checks pass, the objects are considered equal
+  return true;
+}
+
 export {
   generateSavePackage,
   getCurrentDateTimeAsId,
+  getExistingFileHandle,
+  objEquals,
+  readFileContents,
   writeDataToFile,
   writeToExistingFile,
 };

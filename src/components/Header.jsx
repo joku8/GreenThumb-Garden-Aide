@@ -7,7 +7,8 @@ import {
   writeDataToFile,
   generateSavePackage,
   writeToExistingFile,
-} from "../utils";
+  getExistingFileHandle,
+} from "../utils/utils";
 
 const styles = {
   background: "#6fa037",
@@ -58,6 +59,13 @@ const Header = ({ seedBank, harvestBook, file, setFile }) => {
     };
   }, [autosaveOn, saveState, toggleAutosave]);
 
+  const handleUpload = async () => {
+    const ret = await getExistingFileHandle();
+    if (ret.status === true) {
+      setFile(ret.content);
+    }
+  };
+
   return (
     <Box sx={styles}>
       <Stack
@@ -81,23 +89,36 @@ const Header = ({ seedBank, harvestBook, file, setFile }) => {
           justifyContent="space-between"
           spacing={2}
         >
-          <Button variant="contained" onClick={() => console.log("Upload")}>
+          <Button
+            variant="contained"
+            onClick={() => {
+              handleUpload();
+            }}
+          >
             Upload
           </Button>
-          <Button variant="contained" onClick={saveState}>
+          <Button
+            variant="contained"
+            onClick={() => {
+              saveState();
+            }}
+          >
             Save
           </Button>
-          <Tooltip title="Save a file to enable autosave">
-            <Button
-              variant="contained"
-              disabled={file === null}
-              onClick={toggleAutosave}
-              style={{ width: "200px" }}
-            >
-              {autosaveOn ? "Autosave Enabled" : "Autosave Disabled"}
-            </Button>
+          <Tooltip
+            title={file === null ? "Save a file to enable autosave" : ""}
+          >
+            <div>
+              <Button
+                variant="contained"
+                disabled={file === null}
+                onClick={toggleAutosave}
+                style={{ width: "200px" }}
+              >
+                {autosaveOn ? "Autosave Enabled" : "Autosave Disabled"}
+              </Button>
+            </div>
           </Tooltip>
-
           {autosaveOn ? (
             <CircularProgress color="warning" size={35} />
           ) : (

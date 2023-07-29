@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
 import HarvestTracker from "./components/HarvestTracker";
 import Calendar from "./components/Calendar";
@@ -9,7 +9,9 @@ import TaskManager from "./components/TaskManager";
 import AddSeed from "./components/modal/AddSeed";
 import AddHarvest from "./components/modal/AddHarvest";
 
-import { getCurrentDateTimeAsId } from "./utils";
+import { readFileContents } from "./utils/utils";
+
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
   const [fileHandle, setFileHandle] = useState(null);
@@ -21,7 +23,7 @@ function App() {
   const [seedBank, setSeedBank] = useState([]);
   const addToSeedBank = (seedObject) => {
     const addObject = {
-      id: getCurrentDateTimeAsId,
+      id: uuidv4(),
       plant: seedObject.plant,
       cultivar: seedObject.cultivar,
       source: seedObject.source,
@@ -46,7 +48,7 @@ function App() {
   const [harvestBook, setHarvestBook] = useState([]);
   const addToHarvestBook = (harvestObject) => {
     const addObject = {
-      id: getCurrentDateTimeAsId,
+      id: uuidv4(),
       item: harvestObject.item,
       date: harvestObject.date,
       quantity: harvestObject.quantity,
@@ -76,6 +78,21 @@ function App() {
    */
   const [calendarItems, setCalendarItems] = useState([]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      if (fileHandle !== null) {
+        const ret = await readFileContents(fileHandle);
+        if (ret.status === true) {
+          const obj = JSON.parse(ret.contents);
+          setSeedBank(obj.seedStorage);
+          setHarvestBook(obj.harvestBook);
+        }
+      }
+    };
+
+    fetchData();
+  }, [fileHandle]);
+
   return (
     <div>
       <Grid container spacing={3} padding="20px 40px 10px 40px">
@@ -88,11 +105,16 @@ function App() {
           />
         </Grid>
         <Grid item xs={6}>
-          <SeedStorage seeds={seedBank} addSeed={handleOpenAddSeed} />
+          <SeedStorage
+            seeds={seedBank}
+            setSeeds={setSeedBank}
+            addSeed={handleOpenAddSeed}
+          />
         </Grid>
         <Grid item xs={6}>
           <HarvestTracker
             harvest={harvestBook}
+            setHarvest={setHarvestBook}
             addHarvest={handleOpenAddHarvest}
           />
         </Grid>

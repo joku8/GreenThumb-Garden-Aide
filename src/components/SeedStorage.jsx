@@ -5,6 +5,7 @@ import {
   Stack,
   IconButton,
   Grid,
+  TableContainer,
   Table,
   TableHead,
   TableRow,
@@ -13,7 +14,10 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+import "./contextMenu.css";
+import { objEquals } from "../utils/utils";
 
 const styles = {
   width: "95%",
@@ -24,7 +28,7 @@ const styles = {
   overflow: "scroll",
 };
 
-const SeedStorage = ({ seeds, addSeed }) => {
+const SeedStorage = ({ seeds, setSeeds, addSeed }) => {
   // Component logic and state management can be added here
   const [contextMenu, setContextMenu] = useState(null);
 
@@ -43,10 +47,26 @@ const SeedStorage = ({ seeds, addSeed }) => {
 
   const handleDeleteRow = () => {
     if (contextMenu && contextMenu.row) {
-      console.log("delete row: ", contextMenu.row); // Call your delete function with the row data
+      setSeeds((prevSeeds) =>
+        prevSeeds.filter((seed) => !objEquals(seed, contextMenu.row))
+      );
       handleContextMenuClose(); // Close the context menu
     }
   };
+
+  useEffect(() => {
+    const handleClickAway = () => {
+      if (contextMenu) {
+        handleContextMenuClose();
+      }
+    };
+
+    document.addEventListener("click", handleClickAway);
+
+    return () => {
+      document.removeEventListener("click", handleClickAway);
+    };
+  }, [contextMenu]);
 
   return (
     <div>
@@ -72,56 +92,141 @@ const SeedStorage = ({ seeds, addSeed }) => {
             </Stack>
           </Grid>
           <Grid item xs={12}>
-            <Table component={Paper}>
-              <TableHead>
-                <TableRow>
-                  <TableCell align="center" sx={{ fontWeight: "bold" }}>
-                    Plant
-                  </TableCell>
-                  <TableCell align="center" sx={{ fontWeight: "bold" }}>
-                    Cultivar
-                  </TableCell>
-                  <TableCell align="center" sx={{ fontWeight: "bold" }}>
-                    Source
-                  </TableCell>
-                  <TableCell align="center" sx={{ fontWeight: "bold" }}>
-                    Year
-                  </TableCell>
-                  <TableCell align="center" sx={{ fontWeight: "bold" }}>
-                    Notes
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {seeds.map((seed) => (
-                  <TableRow
-                    key={seed.id}
-                    onContextMenu={(event) => handleContextMenu(event, seed)}
-                  >
-                    <TableCell align="center">{seed.plant}</TableCell>
-                    <TableCell align="center">{seed.cultivar}</TableCell>
-                    <TableCell align="center">{seed.source}</TableCell>
-                    <TableCell align="center">{seed.year}</TableCell>
-                    <TableCell align="center">{seed.notes}</TableCell>
+            <TableContainer
+              component={Paper}
+              sx={{ height: "290px", overflow: "scroll" }}
+            >
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        fontWeight: "bold",
+                        width: "20%",
+                      }}
+                    >
+                      Plant
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        fontWeight: "bold",
+                        width: "20%",
+                      }}
+                    >
+                      Cultivar
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        fontWeight: "bold",
+                        width: "20%",
+                      }}
+                    >
+                      Source
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        fontWeight: "bold",
+                        width: "10%",
+                      }}
+                    >
+                      Year
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        fontWeight: "bold",
+                        width: "30%",
+                      }}
+                    >
+                      Notes
+                    </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHead>
+                <TableBody>
+                  {seeds.map((seed) => (
+                    <TableRow
+                      key={seed.id}
+                      onContextMenu={(event) => handleContextMenu(event, seed)}
+                    >
+                      <TableCell
+                        align="center"
+                        sx={{
+                          overflow: "hidden",
+                          whiteSpace: "nowrap",
+                          textOverflow: "ellipsis",
+                          maxWidth: "50px",
+                        }}
+                      >
+                        {seed.plant}
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          overflow: "hidden",
+                          whiteSpace: "nowrap",
+                          textOverflow: "ellipsis",
+                          maxWidth: "50px",
+                        }}
+                      >
+                        {seed.cultivar}
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          overflow: "hidden",
+                          whiteSpace: "nowrap",
+                          textOverflow: "ellipsis",
+                          maxWidth: "50px",
+                        }}
+                      >
+                        {seed.source}
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          overflow: "hidden",
+                          whiteSpace: "nowrap",
+                          textOverflow: "ellipsis",
+                          maxWidth: "50px",
+                        }}
+                      >
+                        {seed.year}
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          overflow: "hidden",
+                          whiteSpace: "nowrap",
+                          textOverflow: "ellipsis",
+                          maxWidth: "50px",
+                        }}
+                      >
+                        {seed.notes}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </Grid>
         </Grid>
       </Box>
       {contextMenu && (
         <div
+          id="context-menu"
           style={{
             position: "absolute",
             top: contextMenu.y,
             left: contextMenu.x,
-            background: "white",
-            boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.2)",
-            padding: "5px",
           }}
         >
-          <div onClick={handleDeleteRow}>Delete</div>
+          <div class="item" onClick={handleDeleteRow}>
+            Delete
+          </div>
         </div>
       )}
     </div>
