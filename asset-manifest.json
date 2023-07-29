@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/GreenThumb-Garden-Aide-WebApp/static/css/main.e6c13ad2.css",
-    "main.js": "/GreenThumb-Garden-Aide-WebApp/static/js/main.22149c5b.js",
+    "main.css": "/GreenThumb-Garden-Aide-WebApp/static/css/main.98befa58.css",
+    "main.js": "/GreenThumb-Garden-Aide-WebApp/static/js/main.7a62d6f6.js",
     "static/js/787.94a5cabf.chunk.js": "/GreenThumb-Garden-Aide-WebApp/static/js/787.94a5cabf.chunk.js",
     "index.html": "/GreenThumb-Garden-Aide-WebApp/index.html",
-    "main.e6c13ad2.css.map": "/GreenThumb-Garden-Aide-WebApp/static/css/main.e6c13ad2.css.map",
-    "main.22149c5b.js.map": "/GreenThumb-Garden-Aide-WebApp/static/js/main.22149c5b.js.map",
+    "main.98befa58.css.map": "/GreenThumb-Garden-Aide-WebApp/static/css/main.98befa58.css.map",
+    "main.7a62d6f6.js.map": "/GreenThumb-Garden-Aide-WebApp/static/js/main.7a62d6f6.js.map",
     "787.94a5cabf.chunk.js.map": "/GreenThumb-Garden-Aide-WebApp/static/js/787.94a5cabf.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e6c13ad2.css",
-    "static/js/main.22149c5b.js"
+    "static/css/main.98befa58.css",
+    "static/js/main.7a62d6f6.js"
   ]
 }
