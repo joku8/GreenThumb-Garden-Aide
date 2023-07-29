@@ -1,18 +1,15 @@
-import { 
-  Grid
-} from '@mui/material';
+import { Grid } from "@mui/material";
 
-import React, { useState } from 'react';
-import Header from './components/Header';
-import HarvestTracker from './components/HarvestTracker';
-import Calendar from './components/Calendar';
-import SeedStorage from './components/SeedStorage';
-import TaskManager from './components/TaskManager';
-import AddSeed from './components/modal/AddSeed';
+import React, { useState } from "react";
+import Header from "./components/Header";
+import HarvestTracker from "./components/HarvestTracker";
+import Calendar from "./components/Calendar";
+import SeedStorage from "./components/SeedStorage";
+import TaskManager from "./components/TaskManager";
+import AddSeed from "./components/modal/AddSeed";
+import AddHarvest from "./components/modal/AddHarvest";
 
-import {
-  getCurrentDateTimeAsId
-} from './utils'
+import { getCurrentDateTimeAsId } from "./utils";
 
 function App() {
   /** Stores the seeds stored
@@ -28,13 +25,17 @@ function App() {
       source: seedObject.source,
       year: seedObject.year,
       notes: seedObject.notes,
-    }
+    };
     setSeedBank((prevSeedBank) => [...prevSeedBank, addObject]);
   };
-  
+
   const [showAddSeed, setShowAddSeed] = useState(false);
-  const handleOpenAddSeed = () => { setShowAddSeed(true); };
-  const handleCloseAddSeed = () => { setShowAddSeed(false); };
+  const handleOpenAddSeed = () => {
+    setShowAddSeed(true);
+  };
+  const handleCloseAddSeed = () => {
+    setShowAddSeed(false);
+  };
 
   /** Stores garden harvest
    *  Array of objects with the following keys:
@@ -49,13 +50,17 @@ function App() {
       quantity: harvestObject.quantity,
       units: harvestObject.units,
       notes: harvestObject.notes,
-    }
-    setSeedBank((prevSeedBank) => [...prevSeedBank, addObject]);
+    };
+    setHarvestBook((prevHarvestBook) => [...prevHarvestBook, addObject]);
   };
-  
+
   const [showAddHarvest, setShowAddHarvest] = useState(false);
-  const handleOpenAddHarvest = () => { setShowAddSeed(true); };
-  const handleCloseAddHarvest = () => { setShowAddSeed(false); };
+  const handleOpenAddHarvest = () => {
+    setShowAddHarvest(true);
+  };
+  const handleCloseAddHarvest = () => {
+    setShowAddHarvest(false);
+  };
 
   /** Stores garden tasks
    *  Array of objects with the following keys:
@@ -71,44 +76,38 @@ function App() {
 
   return (
     <div>
-      <Grid container 
-      spacing={3}
-      padding="20px 40px 10px 40px"
-      >
+      <Grid container spacing={3} padding="20px 40px 10px 40px">
         <Grid item xs={12}>
           <Header />
         </Grid>
         <Grid item xs={6}>
-          <SeedStorage 
-            seeds={seedBank}
-            setSeeds={setSeedBank}
-            addSeed={handleOpenAddSeed}
-          />
+          <SeedStorage seeds={seedBank} addSeed={handleOpenAddSeed} />
         </Grid>
         <Grid item xs={6}>
           <HarvestTracker
             harvest={harvestBook}
-            setHarvest={setHarvestBook}
             addHarvest={handleOpenAddHarvest}
-           />
+          />
         </Grid>
         <Grid item xs={8}>
-          <Calendar 
+          <Calendar
             calendarList={calendarItems}
             setCalendarList={setCalendarItems}
           />
         </Grid>
         <Grid item xs={4}>
-          <TaskManager 
-            tasks={taskList}
-            setTasks={setTaskList}
-          />
+          <TaskManager tasks={taskList} setTasks={setTaskList} />
         </Grid>
       </Grid>
-      <AddSeed 
+      <AddSeed
         showModal={showAddSeed}
         handleCloseModal={handleCloseAddSeed}
         addSeedObj={addToSeedBank}
+      />
+      <AddHarvest
+        showModal={showAddHarvest}
+        handleCloseModal={handleCloseAddHarvest}
+        addHarvestObj={addToHarvestBook}
       />
     </div>
   );

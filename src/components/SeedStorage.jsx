@@ -26,7 +26,6 @@ const styles = {
 
 const SeedStorage = ({
   seeds,
-  setSeeds,
   addSeed,
 }) => {
   // Component logic and state management can be added here
