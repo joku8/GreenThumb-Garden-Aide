@@ -37,10 +37,8 @@ const writeDataToFile = async (data) => {
     const writable = await handle.createWritable();
     await writable.write(data);
     await writable.close();
-    console.log("Data written to the file successfully!");
     return { status: true, content: handle };
   } catch (error) {
-    console.error("Error writing data to the file:", error);
     return { status: false, content: error.message };
   }
 };
@@ -51,10 +49,8 @@ const writeToExistingFile = async (fileHandle, data) => {
     await writable.seek(0); // Move the pointer to the beginning of the file
     await writable.write(data); // Write the new data to the file
     await writable.close();
-    console.log("Data overwritten in the file successfully!");
     return { status: true, content: fileHandle };
   } catch (error) {
-    console.error("Error overwriting data to the file:", error);
     return { status: false, content: error.message };
   }
 };
@@ -73,10 +69,8 @@ const getExistingFileHandle = async () => {
     };
 
     const [fileHandle] = await window.showOpenFilePicker(options);
-    console.log("File handle obtained successfully!");
     return { status: true, content: fileHandle };
   } catch (error) {
-    console.error("Error getting file handle:", error);
     return { status: false, content: error.message };
   }
 };
@@ -85,11 +79,9 @@ const readFileContents = async (fileHandle) => {
   try {
     const file = await fileHandle.getFile();
     const contents = await file.text();
-    console.log("File contents read successfully!");
-    return { status: true, contents: contents };
+    return { status: true, content: contents };
   } catch (error) {
-    console.error("Error reading file contents:", error);
-    return { status: false, contents: null };
+    return { status: false, content: null };
   }
 };
 
@@ -124,7 +116,33 @@ const verifyObject = (obj) => {
   return hasSeedStorage && hasHarvestBook;
 };
 
+const formatDate = (dateString) => {
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const date = new Date(dateString);
+  const month = months[date.getMonth()];
+  const day = date.getDate();
+  const year = date.getFullYear();
+
+  const formattedDate = `${month} ${day}, ${year}`;
+  return formattedDate;
+};
+
 export {
+  formatDate,
   generateSavePackage,
   getCurrentDateTimeAsId,
   getExistingFileHandle,

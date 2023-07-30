@@ -4,10 +4,10 @@ import React from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
-const Feedback = ({ open, key, severity, message, handleClose }) => {
-  return (
+const Feedback = ({ open, feedbackKey, severity, message, handleClose }) => {
+  return severity !== "" ? (
     <Snackbar
-      key={key}
+      key={feedbackKey}
       open={open}
       autoHideDuration={5000}
       onClose={handleClose}
@@ -22,6 +22,8 @@ const Feedback = ({ open, key, severity, message, handleClose }) => {
         {message}
       </MuiAlert>
     </Snackbar>
+  ) : (
+    ""
   );
 };
 

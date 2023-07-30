@@ -8,6 +8,8 @@ import {
   generateSavePackage,
   writeToExistingFile,
   getExistingFileHandle,
+  readFileContents,
+  verifyObject,
 } from "../utils/utils";
 
 const styles = {
@@ -16,7 +18,15 @@ const styles = {
   borderRadius: "20px",
 };
 
-const Header = ({ seedBank, harvestBook, file, setFile, snackbar }) => {
+const Header = ({
+  seedBank,
+  seedBankSetter,
+  harvestBook,
+  harvestBookSetter,
+  file,
+  setFile,
+  snackbar,
+}) => {
   const [autosaveOn, setAutosaveOn] = useState(false);
 
   const toggleAutosave = useCallback(() => {
@@ -32,6 +42,7 @@ const Header = ({ seedBank, harvestBook, file, setFile, snackbar }) => {
         snackbar("success", "File Created 🎉🎉🎉");
         return true;
       }
+      return false;
     } else {
       const ret = await writeToExistingFile(file, data);
       if (ret.status === true) {
@@ -63,7 +74,27 @@ const Header = ({ seedBank, harvestBook, file, setFile, snackbar }) => {
   const handleUpload = async () => {
     const ret = await getExistingFileHandle();
     if (ret.status === true) {
-      setFile(ret.content);
+      const curr = ret.content;
+      const response = await readFileContents(curr);
+      if (response.status === true) {
+        try {
+          const obj = JSON.parse(response.content);
+          if (!verifyObject(obj)) {
+            snackbar("warning", "File could not be uploaded...");
+            return;
+          }
+          seedBankSetter(obj.seedStorage);
+          harvestBookSetter(obj.harvestBook);
+          setFile(ret.content);
+          toggleAutosave();
+          snackbar(
+            "success",
+            "File uploaded successfuly 🌱🌱🌱 Let's get Growing!"
+          );
+        } catch (error) {
+          snackbar("error", `Encountered error...${error.message}`);
+        }
+      }
     }
   };
 

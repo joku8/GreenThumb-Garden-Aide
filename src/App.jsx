@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Header from "./components/Header";
 import HarvestTracker from "./components/HarvestTracker";
 import Calendar from "./components/Calendar";
@@ -9,15 +9,14 @@ import TaskManager from "./components/TaskManager";
 import AddSeed from "./components/modal/AddSeed";
 import AddHarvest from "./components/modal/AddHarvest";
 
-import { readFileContents, verifyObject } from "./utils/utils";
-
 import { v4 as uuidv4 } from "uuid";
 import Feedback from "./utils/Feedback";
+import { getCurrentDateTimeAsId } from "./utils/utils";
 
 function App() {
   // Global Snackbar
   const [showSnackbar, setShowSnackbar] = useState(false);
-  const [severity, setSeverity] = useState("info");
+  const [severity, setSeverity] = useState("");
   const [message, setMessage] = useState("");
   const [snackbarKey, setSnackbarKey] = useState(0); // To manage the key prop
 
@@ -43,6 +42,7 @@ function App() {
   const addToSeedBank = (seedObject) => {
     const addObject = {
       id: uuidv4(),
+      create: getCurrentDateTimeAsId(),
       plant: seedObject.plant,
       cultivar: seedObject.cultivar,
       source: seedObject.source,
@@ -69,6 +69,7 @@ function App() {
   const addToHarvestBook = (harvestObject) => {
     const addObject = {
       id: uuidv4(),
+      create: getCurrentDateTimeAsId(),
       item: harvestObject.item,
       date: harvestObject.date,
       quantity: harvestObject.quantity,
@@ -99,36 +100,15 @@ function App() {
    */
   const [calendarItems, setCalendarItems] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (fileHandle !== null) {
-        const ret = await readFileContents(fileHandle);
-        if (ret.status === true) {
-          const obj = JSON.parse(ret.contents);
-          if (!verifyObject(obj)) {
-            showCustomSnackbar("warning", "File could not be uploaded...");
-            return;
-          }
-          setSeedBank(obj.seedStorage);
-          setHarvestBook(obj.harvestBook);
-          showCustomSnackbar(
-            "Success",
-            "File uploaded successfuly 🌱🌱🌱 Let's get Growing!"
-          );
-        }
-      }
-    };
-
-    fetchData();
-  }, [fileHandle]);
-
   return (
     <div>
       <Grid container spacing={3} padding="20px 40px 10px 40px">
         <Grid item xs={12}>
           <Header
             seedBank={seedBank}
+            seedBankSetter={setSeedBank}
             harvestBook={harvestBook}
+            harvestBookSetter={setHarvestBook}
             file={fileHandle}
             setFile={setFileHandle}
             snackbar={showCustomSnackbar}
@@ -169,7 +149,7 @@ function App() {
         addHarvestObj={addToHarvestBook}
       />
       <Feedback
-        key={snackbarKey}
+        feedbackKey={snackbarKey}
         open={showSnackbar}
         severity={severity}
         message={message}

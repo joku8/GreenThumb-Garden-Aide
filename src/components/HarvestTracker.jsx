@@ -15,6 +15,7 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 
 import React, { useState, useEffect } from "react";
+import { formatDate } from "../utils/utils";
 
 const styles = {
   height: "350px",
@@ -107,7 +108,7 @@ const HarvestTracker = ({ harvest, setHarvest, addHarvest }) => {
                       align="center"
                       sx={{
                         fontWeight: "bold",
-                        width: "15%",
+                        width: "20%",
                       }}
                     >
                       Date
@@ -134,7 +135,7 @@ const HarvestTracker = ({ harvest, setHarvest, addHarvest }) => {
                       align="center"
                       sx={{
                         fontWeight: "bold",
-                        width: "45%",
+                        width: "40%",
                       }}
                     >
                       Notes
@@ -170,7 +171,7 @@ const HarvestTracker = ({ harvest, setHarvest, addHarvest }) => {
                           maxWidth: "50px",
                         }}
                       >
-                        {instance.date}
+                        {formatDate(instance.date)}
                       </TableCell>
                       <TableCell
                         align="center"
