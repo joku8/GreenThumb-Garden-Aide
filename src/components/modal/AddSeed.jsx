@@ -1,4 +1,12 @@
-import { Modal, TextField, Button, Box, Grid, Typography } from "@mui/material";
+import {
+  Modal,
+  TextField,
+  Button,
+  Box,
+  Grid,
+  Typography,
+  Autocomplete,
+} from "@mui/material";
 
 import React, { useState } from "react";
 
@@ -45,6 +53,16 @@ const AddSeed = ({ showModal, handleCloseModal, addSeedObj }) => {
     });
   };
 
+  const seedSource = [
+    "Baker Creek Heirloom Seeds",
+    "Botanical Interests",
+    "Burpee",
+    "Johnny's Seeds",
+    "MIgardener",
+    "Renee's Garden",
+    "True Leaf Market",
+  ];
+
   return (
     <Modal open={showModal} onClose={handleCloseModal}>
       <Box sx={boxStyle}>
@@ -79,12 +97,18 @@ const AddSeed = ({ showModal, handleCloseModal, addSeedObj }) => {
             />
           </Grid>
           <Grid item xs={6}>
-            <TextField
-              label="Source"
-              name="source"
-              value={seedObj.source}
-              onChange={handleInputChange}
-              fullWidth
+            <Autocomplete
+              freeSolo
+              options={seedSource}
+              onInputChange={(event, newValue) => {
+                setSeedObj((prevValues) => ({
+                  ...prevValues,
+                  source: newValue,
+                }));
+              }}
+              renderInput={(params) => (
+                <TextField {...params} label="Source" fullWidth />
+              )}
             />
           </Grid>
           <Grid item xs={6}>

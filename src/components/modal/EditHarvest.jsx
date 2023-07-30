@@ -8,7 +8,7 @@ import {
   Autocomplete,
 } from "@mui/material";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const boxStyle = {
   backgroundColor: "#ffffff", // White background
@@ -27,7 +27,14 @@ const boxStyle = {
   overflow: "scroll",
 };
 
-const AddSeed = ({ showModal, handleCloseModal, addHarvestObj }) => {
+const EditHarvest = ({
+  showModal,
+  handleCloseModal,
+  collection,
+  setCollection,
+  changeableID,
+  reset,
+}) => {
   const [harvestObj, setHarvestObj] = useState({
     item: "",
     date: "",
@@ -36,21 +43,30 @@ const AddSeed = ({ showModal, handleCloseModal, addHarvestObj }) => {
     notes: "",
   });
 
+  useEffect(() => {
+    if (changeableID !== "") {
+      setHarvestObj(collection.find((item) => item.id === changeableID));
+    }
+  }, [collection, changeableID]);
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setHarvestObj((prevValues) => ({ ...prevValues, [name]: value }));
   };
 
-  const handleSubmit = () => {
-    addHarvestObj(harvestObj);
+  const handleSave = () => {
+    const foundObject = collection.find((item) => item.id === changeableID);
+
+    if (foundObject) {
+      // Merge the existing object with the updated properties using object spread
+      const updatedObject = { ...foundObject, ...harvestObj };
+      // Find the index of the object in the array
+      const index = collection.indexOf(foundObject);
+      // Update the object in the original array
+      collection[index] = updatedObject;
+    }
+    reset();
     handleCloseModal();
-    setHarvestObj({
-      item: "",
-      date: "",
-      quantity: "",
-      units: "",
-      notes: "",
-    });
   };
 
   const unitOptions = ["lb", "oz", "kg", "g", "count"];
@@ -67,7 +83,7 @@ const AddSeed = ({ showModal, handleCloseModal, addHarvestObj }) => {
         >
           <Grid item xs={12}>
             <Typography variant="h5" display="flex" justifyContent="center">
-              Add Your Harvest to Storage!
+              Edit Harvest Entry
             </Typography>
           </Grid>
           <Grid item xs={6}>
@@ -126,7 +142,7 @@ const AddSeed = ({ showModal, handleCloseModal, addHarvestObj }) => {
             />
           </Grid>
           <Grid item xs={12} display="flex" justifyContent="right">
-            <Button variant="contained" color="primary" onClick={handleSubmit}>
+            <Button variant="contained" color="primary" onClick={handleSave}>
               Submit
             </Button>
           </Grid>
@@ -136,4 +152,4 @@ const AddSeed = ({ showModal, handleCloseModal, addHarvestObj }) => {
   );
 };
 
-export default AddSeed;
+export default EditHarvest;

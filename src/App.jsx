@@ -12,6 +12,8 @@ import AddHarvest from "./components/modal/AddHarvest";
 import { v4 as uuidv4 } from "uuid";
 import Feedback from "./utils/Feedback";
 import { getCurrentDateTimeAsId } from "./utils/utils";
+import EditSeed from "./components/modal/EditSeed";
+import EditHarvest from "./components/modal/EditHarvest";
 
 function App() {
   // Global Snackbar
@@ -61,6 +63,24 @@ function App() {
     setShowAddSeed(false);
   };
 
+  const [showEditSeed, setShowEditSeed] = useState(false);
+  const handleOpenEditSeed = () => {
+    setShowEditSeed(true);
+  };
+  const handleCloseEditSeed = () => {
+    setShowEditSeed(false);
+  };
+
+  const [editSeedID, setEditSeedID] = useState("");
+  const resetEditSeedID = () => {
+    setEditSeedID("");
+  };
+
+  const editSeed = (id) => {
+    handleOpenEditSeed();
+    setEditSeedID(id);
+  };
+
   /** Stores garden harvest
    *  Array of objects with the following keys:
    *  Item, Date, Quantity, Units, Notes
@@ -86,6 +106,24 @@ function App() {
   };
   const handleCloseAddHarvest = () => {
     setShowAddHarvest(false);
+  };
+
+  const [showEditHarvest, setShowEditHarvest] = useState(false);
+  const handleOpenEditHarvest = () => {
+    setShowEditHarvest(true);
+  };
+  const handleCloseEditHarvest = () => {
+    setShowEditHarvest(false);
+  };
+
+  const [editHarvestID, setEditHarvestID] = useState("");
+  const resetEditHarvestID = () => {
+    setEditHarvestID("");
+  };
+
+  const editHarvest = (id) => {
+    handleOpenEditHarvest();
+    setEditHarvestID(id);
   };
 
   /** Stores garden tasks
@@ -119,6 +157,7 @@ function App() {
             seeds={seedBank}
             setSeeds={setSeedBank}
             addSeed={handleOpenAddSeed}
+            seedEditable={editSeed}
           />
         </Grid>
         <Grid item xs={6}>
@@ -126,6 +165,7 @@ function App() {
             harvest={harvestBook}
             setHarvest={setHarvestBook}
             addHarvest={handleOpenAddHarvest}
+            harvestEditable={editHarvest}
           />
         </Grid>
         <Grid item xs={8}>
@@ -143,10 +183,26 @@ function App() {
         handleCloseModal={handleCloseAddSeed}
         addSeedObj={addToSeedBank}
       />
+      <EditSeed
+        showModal={showEditSeed}
+        handleCloseModal={handleCloseEditSeed}
+        collection={seedBank}
+        setCollection={setSeedBank}
+        changeableID={editSeedID}
+        reset={resetEditSeedID}
+      />
       <AddHarvest
         showModal={showAddHarvest}
         handleCloseModal={handleCloseAddHarvest}
         addHarvestObj={addToHarvestBook}
+      />
+      <EditHarvest
+        showModal={showEditHarvest}
+        handleCloseModal={handleCloseEditHarvest}
+        collection={harvestBook}
+        setCollection={setHarvestBook}
+        changeableID={editHarvestID}
+        reset={resetEditHarvestID}
       />
       <Feedback
         feedbackKey={snackbarKey}

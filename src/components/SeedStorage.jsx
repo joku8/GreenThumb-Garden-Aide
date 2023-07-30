@@ -28,7 +28,7 @@ const styles = {
   overflow: "scroll",
 };
 
-const SeedStorage = ({ seeds, setSeeds, addSeed }) => {
+const SeedStorage = ({ seeds, setSeeds, addSeed, seedEditable }) => {
   // Component logic and state management can be added here
   const [contextMenu, setContextMenu] = useState(null);
 
@@ -50,6 +50,13 @@ const SeedStorage = ({ seeds, setSeeds, addSeed }) => {
       setSeeds((prevSeeds) =>
         prevSeeds.filter((seed) => !objEquals(seed, contextMenu.row))
       );
+      handleContextMenuClose(); // Close the context menu
+    }
+  };
+
+  const handleEditRow = () => {
+    if (contextMenu && contextMenu.row) {
+      seedEditable(contextMenu.row.id);
       handleContextMenuClose(); // Close the context menu
     }
   };
@@ -224,8 +231,11 @@ const SeedStorage = ({ seeds, setSeeds, addSeed }) => {
             left: contextMenu.x,
           }}
         >
-          <div class="item" onClick={handleDeleteRow}>
+          <div className="item" onClick={handleDeleteRow}>
             Delete
+          </div>
+          <div className="item" onClick={handleEditRow}>
+            Edit
           </div>
         </div>
       )}

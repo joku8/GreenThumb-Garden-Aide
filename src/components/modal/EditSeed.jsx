@@ -8,7 +8,7 @@ import {
   Autocomplete,
 } from "@mui/material";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const boxStyle = {
   backgroundColor: "#ffffff", // White background
@@ -27,33 +27,57 @@ const boxStyle = {
   overflow: "scroll",
 };
 
-const AddSeed = ({ showModal, handleCloseModal, addHarvestObj }) => {
-  const [harvestObj, setHarvestObj] = useState({
-    item: "",
-    date: "",
-    quantity: "",
-    units: "",
+const EditSeed = ({
+  showModal,
+  handleCloseModal,
+  collection,
+  setCollection,
+  changeableID,
+  reset,
+}) => {
+  const [seedObj, setSeedObj] = useState({
+    plant: "",
+    cultivar: "",
+    source: "",
+    year: "",
     notes: "",
   });
 
+  useEffect(() => {
+    if (changeableID !== "") {
+      setSeedObj(collection.find((item) => item.id === changeableID));
+    }
+  }, [collection, changeableID]);
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setHarvestObj((prevValues) => ({ ...prevValues, [name]: value }));
+    setSeedObj((prevValues) => ({ ...prevValues, [name]: value }));
   };
 
-  const handleSubmit = () => {
-    addHarvestObj(harvestObj);
+  const handleSave = () => {
+    const foundObject = collection.find((item) => item.id === changeableID);
+
+    if (foundObject) {
+      // Merge the existing object with the updated properties using object spread
+      const updatedObject = { ...foundObject, ...seedObj };
+      // Find the index of the object in the array
+      const index = collection.indexOf(foundObject);
+      // Update the object in the original array
+      collection[index] = updatedObject;
+    }
+    reset();
     handleCloseModal();
-    setHarvestObj({
-      item: "",
-      date: "",
-      quantity: "",
-      units: "",
-      notes: "",
-    });
   };
 
-  const unitOptions = ["lb", "oz", "kg", "g", "count"];
+  const seedSource = [
+    "Baker Creek Heirloom Seeds",
+    "Botanical Interests",
+    "Burpee",
+    "Johnny's Seeds",
+    "MIgardener",
+    "Renee's Garden",
+    "True Leaf Market",
+  ];
 
   return (
     <Modal open={showModal} onClose={handleCloseModal}>
@@ -67,36 +91,23 @@ const AddSeed = ({ showModal, handleCloseModal, addHarvestObj }) => {
         >
           <Grid item xs={12}>
             <Typography variant="h5" display="flex" justifyContent="center">
-              Add Your Harvest to Storage!
+              Edit Seed Entry
             </Typography>
           </Grid>
           <Grid item xs={6}>
             <TextField
-              label="Item"
-              name="item"
-              value={harvestObj.item}
+              label="Plant"
+              name="plant"
+              value={seedObj.plant}
               onChange={handleInputChange}
               fullWidth
             />
           </Grid>
           <Grid item xs={6}>
             <TextField
-              label="Date"
-              name="date"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              value={harvestObj.date}
-              type="date"
-              onChange={handleInputChange}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              label="Quantity"
-              name="quantity"
-              value={harvestObj.quantity}
+              label="Cultivar"
+              name="cultivar"
+              value={seedObj.cultivar}
               onChange={handleInputChange}
               fullWidth
             />
@@ -104,30 +115,39 @@ const AddSeed = ({ showModal, handleCloseModal, addHarvestObj }) => {
           <Grid item xs={6}>
             <Autocomplete
               freeSolo
-              options={unitOptions}
+              options={seedSource}
               onInputChange={(event, newValue) => {
-                setHarvestObj((prevValues) => ({
+                setSeedObj((prevValues) => ({
                   ...prevValues,
-                  units: newValue,
+                  source: newValue,
                 }));
               }}
               renderInput={(params) => (
-                <TextField {...params} label="Units" fullWidth />
+                <TextField {...params} label="Source" fullWidth />
               )}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              label="Year"
+              name="year"
+              value={seedObj.year}
+              onChange={handleInputChange}
+              fullWidth
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
               label="Notes"
               name="notes"
-              value={harvestObj.notes}
+              value={seedObj.notes}
               onChange={handleInputChange}
               fullWidth
             />
           </Grid>
           <Grid item xs={12} display="flex" justifyContent="right">
-            <Button variant="contained" color="primary" onClick={handleSubmit}>
-              Submit
+            <Button variant="contained" color="primary" onClick={handleSave}>
+              Save Changes
             </Button>
           </Grid>
         </Grid>
@@ -136,4 +156,4 @@ const AddSeed = ({ showModal, handleCloseModal, addHarvestObj }) => {
   );
 };
 
-export default AddSeed;
+export default EditSeed;

@@ -24,7 +24,12 @@ const styles = {
   borderRadius: "20px",
 };
 
-const HarvestTracker = ({ harvest, setHarvest, addHarvest }) => {
+const HarvestTracker = ({
+  harvest,
+  setHarvest,
+  addHarvest,
+  harvestEditable,
+}) => {
   // Component logic and state management can be added here
   const [contextMenu, setContextMenu] = useState(null);
 
@@ -46,6 +51,13 @@ const HarvestTracker = ({ harvest, setHarvest, addHarvest }) => {
       setHarvest((prevHarvest) =>
         prevHarvest.filter((harvest) => harvest.id !== contextMenu.row.id)
       );
+      handleContextMenuClose(); // Close the context menu
+    }
+  };
+
+  const handleEditRow = () => {
+    if (contextMenu && contextMenu.row) {
+      harvestEditable(contextMenu.row.id);
       handleContextMenuClose(); // Close the context menu
     }
   };
@@ -223,8 +235,11 @@ const HarvestTracker = ({ harvest, setHarvest, addHarvest }) => {
             left: contextMenu.x,
           }}
         >
-          <div class="item" onClick={handleDeleteRow}>
+          <div className="item" onClick={handleDeleteRow}>
             Delete
+          </div>
+          <div className="item" onClick={handleEditRow}>
+            Edit
           </div>
         </div>
       )}
