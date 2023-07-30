@@ -143,7 +143,7 @@ const EditHarvest = ({
           </Grid>
           <Grid item xs={12} display="flex" justifyContent="right">
             <Button variant="contained" color="primary" onClick={handleSave}>
-              Submit
+              Save Changes
             </Button>
           </Grid>
         </Grid>

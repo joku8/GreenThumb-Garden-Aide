@@ -13,10 +13,11 @@ const getCurrentDateTimeAsId = () => {
   return `${year}-${month}-${day}-${hours}-${minutes}-${seconds}`;
 };
 
-const generateSavePackage = (seedStorage, harvestBook) => {
+const generateSavePackage = (seedStorage, harvestBook, calendarItems) => {
   return JSON.stringify({
     seedStorage: seedStorage,
     harvestBook: harvestBook,
+    calendarItems: calendarItems,
   });
 };
 
@@ -111,9 +112,10 @@ const verifyObject = (obj) => {
   // Check if the object has 'seedStorage' and 'harvestBook' keys
   const hasSeedStorage = keys.includes("seedStorage");
   const hasHarvestBook = keys.includes("harvestBook");
+  const hasCalendarItems = keys.includes("calendarItems");
 
   // Return true if both keys are present, otherwise return false
-  return hasSeedStorage && hasHarvestBook;
+  return hasSeedStorage && hasHarvestBook && hasCalendarItems;
 };
 
 const formatDate = (dateString) => {
@@ -141,13 +143,143 @@ const formatDate = (dateString) => {
   return formattedDate;
 };
 
+const computeDates = (data) => {
+  const convertDateToDayCount = (dateArr) => {
+    const [startDate, endDate] = dateArr;
+    if (startDate === "" || endDate === "") {
+      return [0, 0];
+    }
+
+    const parseDate = (dateStr) => {
+      const [month, day] = dateStr.split("-").map(Number);
+      return new Date(2023, month - 1, day);
+    };
+
+    const startOfYear = new Date(2023, 0, 1);
+    const start = parseDate(startDate);
+    const end = parseDate(endDate);
+
+    const daysFromStartOfYearStart = Math.floor(
+      (start - startOfYear) / (1000 * 60 * 60 * 24)
+    );
+    const daysFromStartOfYearEnd = Math.floor(
+      (end - startOfYear) / (1000 * 60 * 60 * 24)
+    );
+
+    return [daysFromStartOfYearStart, daysFromStartOfYearEnd];
+  };
+
+  const computedData = {};
+
+  const keys = Object.keys(data);
+
+  for (let i = 0; i < keys.length; i++) {
+    const curr = data[keys[i]];
+    computedData[keys[i]] = convertDateToDayCount(curr);
+  }
+
+  return computedData;
+};
+
+const verifyAndProcess = (obj, includes) => {
+  // Ensure the object follows the required schema
+  const isValidSchema =
+    typeof obj === "object" &&
+    obj !== null &&
+    Object.keys(obj).length === 2 &&
+    "plant" in obj &&
+    "data" in obj &&
+    typeof obj.data === "object" &&
+    obj.data !== null &&
+    Object.keys(obj.data).length === 4 &&
+    "sow" in obj.data &&
+    "transplant" in obj.data &&
+    "grow" in obj.data &&
+    "harvest" in obj.data;
+
+  if (!isValidSchema) {
+    return { status: false, content: "Incorrect schema" };
+  }
+
+  const checkDateOrder = (start, end) => {
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+
+    if (startDate > endDate) {
+      return false; // Start date is after end date
+    }
+
+    return true; // Start date is before or equal to end date
+  };
+
+  const convertDate = (date) => {
+    const [year, month, day] = date.split("-");
+    return `${month}-${day}`;
+  };
+
+  const verifiedData = {};
+
+  let currYear = null;
+
+  const keys = Object.keys(obj.data);
+
+  for (let i = 0; i < keys.length; i++) {
+    const curr = obj.data[keys[i]];
+    // Check if you should include this interval
+    if (includes[keys[i]] !== true) {
+      verifiedData[keys[i]] = ["", ""];
+      continue;
+    }
+    // Check if date is provided
+    if (curr[0] === "" || curr[1] === "") {
+      verifiedData[keys[i]] = ["", ""];
+      continue;
+    }
+    // Check date order
+    if (!checkDateOrder(curr[0], curr[1])) {
+      return {
+        status: false,
+        content:
+          "One or more end dates come before the corresponding start date...",
+      };
+    }
+    // Ensure the year is the same across
+    const [year0, month0, day0] = curr[0].split("-").map(Number);
+    const [year1, month1, day1] = curr[1].split("-").map(Number);
+    if (year0 !== year1) {
+      return {
+        status: false,
+        content: "Please use the same year for all dates...",
+      };
+    } else {
+      if (currYear === null) {
+        currYear = year0;
+      } else {
+        if (currYear !== year0 || currYear !== year1) {
+          return {
+            status: false,
+            content: "Please use the same year for all dates...",
+          };
+        }
+      }
+    }
+    verifiedData[keys[i]] = [convertDate(curr[0]), convertDate(curr[1])];
+  }
+
+  return { status: true, content: { plant: obj.plant, data: verifiedData } };
+};
+
+export default verifyAndProcess;
+
 export {
+  computeDates,
   formatDate,
   generateSavePackage,
   getCurrentDateTimeAsId,
   getExistingFileHandle,
   objEquals,
   readFileContents,
+  verifyAndProcess,
   verifyObject,
   writeDataToFile,
   writeToExistingFile,

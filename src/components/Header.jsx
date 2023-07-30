@@ -23,6 +23,8 @@ const Header = ({
   seedBankSetter,
   harvestBook,
   harvestBookSetter,
+  calendarList,
+  calendarListSetter,
   file,
   setFile,
   snackbar,
@@ -34,7 +36,7 @@ const Header = ({
   }, []);
 
   const saveState = useCallback(async () => {
-    const data = generateSavePackage(seedBank, harvestBook);
+    const data = generateSavePackage(seedBank, harvestBook, calendarList);
     if (file === null) {
       const ret = await writeDataToFile(data);
       if (ret.status === true) {
@@ -50,7 +52,7 @@ const Header = ({
       }
     }
     return false;
-  }, [file, seedBank, harvestBook, setFile, snackbar]);
+  }, [file, seedBank, harvestBook, setFile, snackbar, calendarList]);
 
   useEffect(() => {
     let intervalId;
@@ -85,6 +87,7 @@ const Header = ({
           }
           seedBankSetter(obj.seedStorage);
           harvestBookSetter(obj.harvestBook);
+          calendarListSetter(obj.calendarItems);
           setFile(ret.content);
           toggleAutosave();
           snackbar(

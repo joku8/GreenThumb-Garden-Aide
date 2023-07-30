@@ -20,7 +20,7 @@ import { formatDate } from "../utils/utils";
 const styles = {
   height: "350px",
   padding: "10px 20px 10px 20px",
-  backgroundColor: "#e5e5e5",
+  backgroundColor: "#f1f1f1",
   borderRadius: "20px",
 };
 

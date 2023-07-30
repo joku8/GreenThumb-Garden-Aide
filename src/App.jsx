@@ -14,6 +14,7 @@ import Feedback from "./utils/Feedback";
 import { getCurrentDateTimeAsId } from "./utils/utils";
 import EditSeed from "./components/modal/EditSeed";
 import EditHarvest from "./components/modal/EditHarvest";
+import AddCalendar from "./components/modal/AddCalendar";
 
 function App() {
   // Global Snackbar
@@ -136,7 +137,57 @@ function App() {
    *  Array of objects with the following keys:
    *  Plant, periods (an array of objects showing dates. For example march 15 - april 10: sow, april 10 - June 10 harvest, etc.)
    */
+
+  // [
+  //   {
+  //     id: uuidv4(),
+  //     create: getCurrentDateTimeAsId(),
+  //     plant: "Lettuce",
+  //     data: {
+  //       sow: ["01-01", "04-30"],
+  //       transplant: ["05-01", "07-31"],
+  //       grow: ["08-01", "09-01"],
+  //       harvest: ["09-01", "12-31"],
+  //     },
+  //   },
+  // ]
   const [calendarItems, setCalendarItems] = useState([]);
+  const addCalendarItem = (item) => {
+    const addObject = {
+      id: uuidv4(),
+      create: getCurrentDateTimeAsId(),
+      plant: item.plant,
+      data: item.data,
+    };
+    setCalendarItems((prev) => [...prev, addObject]);
+    showCustomSnackbar("success", "Calendar item added successfully 📅 !!!");
+  };
+
+  const [showAddCalendar, setShowAddCalendar] = useState(false);
+  const handleOpenAddCalendar = () => {
+    setShowAddCalendar(true);
+  };
+  const handleCloseAddCalendar = () => {
+    setShowAddCalendar(false);
+  };
+
+  // const [showEditCalendar, setShowEditCalendar] = useState(false);
+  // const handleOpenEditCalendar = () => {
+  //   setShowEditCalendar(true);
+  // };
+  // const handleCloseEditCalendar = () => {
+  //   setShowEditCalendar(false);
+  // };
+
+  // const [editCalendarID, setEditCalendarID] = useState("");
+  // const resetEditCalendarID = () => {
+  //   setEditCalendarID("");
+  // };
+
+  // const editCalendar = (id) => {
+  //   handleOpenEditCalendar();
+  //   setEditCalendarID(id);
+  // };
 
   return (
     <div>
@@ -147,6 +198,8 @@ function App() {
             seedBankSetter={setSeedBank}
             harvestBook={harvestBook}
             harvestBookSetter={setHarvestBook}
+            calendarList={calendarItems}
+            calendarListSetter={setCalendarItems}
             file={fileHandle}
             setFile={setFileHandle}
             snackbar={showCustomSnackbar}
@@ -172,6 +225,8 @@ function App() {
           <Calendar
             calendarList={calendarItems}
             setCalendarList={setCalendarItems}
+            addCalendar={handleOpenAddCalendar}
+            // calendarEditable={editCalendar}
           />
         </Grid>
         <Grid item xs={4}>
@@ -203,6 +258,11 @@ function App() {
         setCollection={setHarvestBook}
         changeableID={editHarvestID}
         reset={resetEditHarvestID}
+      />
+      <AddCalendar
+        showModal={showAddCalendar}
+        handleCloseModal={handleCloseAddCalendar}
+        addCalendarObj={addCalendarItem}
       />
       <Feedback
         feedbackKey={snackbarKey}
