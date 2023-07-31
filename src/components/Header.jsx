@@ -74,6 +74,7 @@ const Header = ({
   }, [autosaveOn, saveState, toggleAutosave]);
 
   const handleUpload = async () => {
+    setAutosaveOn(false);
     const ret = await getExistingFileHandle();
     if (ret.status === true) {
       const curr = ret.content;

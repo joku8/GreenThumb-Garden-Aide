@@ -1,6 +1,14 @@
+import {
+  Box,
+  Tooltip,
+  Typography,
+  styled,
+  tooltipClasses,
+} from "@mui/material";
 import React from "react";
+import { formatDateToMonthDay } from "../../utils/utils";
 
-const FloatRangeBar = ({ start, end, width, height, shadedColor }) => {
+const FloatRangeBar = ({ start, end, width, height, shadedColor, info }) => {
   if (start < 0 || start > 366 || end < 0 || end > 366) {
     console.error("Invalid float range. Values should be between 0 and 366.");
     return null;
@@ -27,9 +35,34 @@ const FloatRangeBar = ({ start, end, width, height, shadedColor }) => {
     },
   };
 
+  const StyledTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: "#f5f5f9",
+      color: "rgba(0, 0, 0, 0.87)",
+      maxWidth: 220,
+      fontSize: theme.typography.pxToRem(12),
+      border: "1px solid #dadde9",
+    },
+  }));
+
   return (
     <div style={styles.container}>
-      <div style={styles.rangeBar}></div>
+      <StyledTooltip
+        title={
+          <Box marginBottom="0px">
+            {" "}
+            {/* Adjust the margin value as needed */}
+            <Typography variant="overline">{info.action}</Typography>
+            <Typography variant="body1">{`${formatDateToMonthDay(
+              info.dates[0]
+            )} to ${formatDateToMonthDay(info.dates[1])}`}</Typography>
+          </Box>
+        }
+      >
+        <div style={styles.rangeBar}></div>
+      </StyledTooltip>
     </div>
   );
 };

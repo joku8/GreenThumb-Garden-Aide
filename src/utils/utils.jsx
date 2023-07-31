@@ -143,6 +143,36 @@ const formatDate = (dateString) => {
   return formattedDate;
 };
 
+function formatDateToMonthDay(dateString) {
+  const [month, day] = dateString.split("-");
+  const date = new Date(2023, month - 1, day); // Assuming the year is 2023
+
+  // Array of month names
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  // Get the month name from the array (e.g., month = 6 => monthNames[6 - 1] = "Jun")
+  const formattedMonth = monthNames[date.getMonth()];
+
+  // Get the day of the month
+  const formattedDay = date.getDate();
+
+  // Return the formatted date string (e.g., "Jun 22")
+  return `${formattedMonth} ${formattedDay}`;
+}
+
 const computeDates = (data) => {
   const convertDateToDayCount = (dateArr) => {
     const [startDate, endDate] = dateArr;
@@ -213,7 +243,9 @@ const verifyAndProcess = (obj, includes) => {
   };
 
   const convertDate = (date) => {
-    const [year, month, day] = date.split("-");
+    const dateArr = date.split("-");
+    const month = dateArr[1];
+    const day = dateArr[2];
     return `${month}-${day}`;
   };
 
@@ -244,8 +276,12 @@ const verifyAndProcess = (obj, includes) => {
       };
     }
     // Ensure the year is the same across
-    const [year0, month0, day0] = curr[0].split("-").map(Number);
-    const [year1, month1, day1] = curr[1].split("-").map(Number);
+    const date0arr = curr[0].split("-").map(Number);
+    const date1arr = curr[1].split("-").map(Number);
+
+    const year0 = date0arr[0];
+    const year1 = date1arr[0];
+
     if (year0 !== year1) {
       return {
         status: false,
@@ -274,6 +310,7 @@ export default verifyAndProcess;
 export {
   computeDates,
   formatDate,
+  formatDateToMonthDay,
   generateSavePackage,
   getCurrentDateTimeAsId,
   getExistingFileHandle,
