@@ -132,6 +132,15 @@ function App() {
    *  Todo, Due, Notes
    */
   const [taskList, setTaskList] = useState([]);
+  const addTask = (item) => {
+    const addObject = {
+      id: uuidv4(),
+      create: getCurrentDateTimeAsId(),
+      
+    };
+    setTaskList((prev) => [...prev, addObject]);
+    showCustomSnackbar("success", "Task added successfully ✅ !!!");
+  };
 
   /** Stores calendar items
    *  Array of objects with the following keys:

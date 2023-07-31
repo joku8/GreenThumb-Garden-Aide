@@ -4,9 +4,8 @@ import AddIcon from "@mui/icons-material/Add";
 import React from "react";
 
 const styles = {
-  width: "93%",
-  height: "500px",
-  padding: "10px 20px 10px 20px",
+  width: "100%",
+  height: "540px",
   backgroundColor: "#f1f1f1",
   borderRadius: "20px",
 };
@@ -21,6 +20,7 @@ const TaskManager = () => {
           display="flex"
           alignItems="center"
           justifyContent="space-between"
+          padding="10px 20px 10px 20px"
         >
           <Typography variant="h4" fontWeight="lighter" fontSize="28px">
             Task Manager

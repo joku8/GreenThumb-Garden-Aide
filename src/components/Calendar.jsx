@@ -17,9 +17,8 @@ import AddIcon from "@mui/icons-material/Add";
 import PlantLifecycleChart from "./subviews/PlantLifeCycleChart";
 
 const styles = {
-  width: "95%",
-  height: "500px",
-  padding: "10px 20px 10px 20px",
+  width: "100%",
+  height: "540px",
   backgroundColor: "#f1f1f1",
   borderRadius: "20px",
 };
@@ -30,7 +29,6 @@ const Calendar = ({
   addCalendar,
   calendarEditable,
 }) => {
-
   const monthAbbreviations = [
     "Jan",
     "Feb",
@@ -89,7 +87,7 @@ const Calendar = ({
     <div>
       <Box component={Paper} elevation={2} sx={styles}>
         <Grid container>
-          <Grid item xs={12}>
+          <Grid item xs={12} padding="10px 20px 10px 20px">
             <Stack
               direction="row"
               display="flex"
@@ -108,7 +106,7 @@ const Calendar = ({
               </IconButton>
             </Stack>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} padding="10px 20px 10px 20px">
             <TableContainer
               component={Paper}
               sx={{ height: "425px", overflow: "scroll" }}

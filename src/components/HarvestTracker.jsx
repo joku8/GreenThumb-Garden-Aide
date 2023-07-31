@@ -104,7 +104,7 @@ const HarvestTracker = ({
               component={Paper}
               sx={{ height: "290px", overflow: "scroll" }}
             >
-              <Table size="small">
+              <Table stickyHeader size="small">
                 <TableHead>
                   <TableRow>
                     <TableCell
