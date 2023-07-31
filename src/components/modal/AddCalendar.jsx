@@ -10,26 +10,29 @@ import {
 } from "@mui/material";
 
 import React, { useState } from "react";
-import verifyAndProcess, { computeDates } from "../../utils/utils";
+import verifyAndProcess from "../../utils/utils";
 
 const boxStyle = {
   backgroundColor: "#ffffff", // White background
   width: "40%", // 40% width of the viewport
-  height: "60%", // 40% height of the viewport
+  height: "60%", // 60% height of the viewport
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
+  alignItems: "start",
   padding: "30px",
   borderRadius: "10px",
   overflow: "scroll",
 };
 
-const AddCalendar = ({ showModal, handleCloseModal, addCalendarObj }) => {
+const AddCalendar = ({
+  showModal,
+  handleCloseModal,
+  addCalendarObj,
+  snackbar,
+}) => {
   const [checkedSow, setCheckedSow] = React.useState(true);
   const handleChangeCheckedSow = (event) => {
     setCheckedSow(event.target.checked);
@@ -98,7 +101,7 @@ const AddCalendar = ({ showModal, handleCloseModal, addCalendarObj }) => {
       setCheckedGrow(true);
       setCheckedHarvest(true);
     } else {
-      // Snackbar alert here
+      snackbar("error", `Something went wrong...${processed.content}`);
     }
   };
 

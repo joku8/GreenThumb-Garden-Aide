@@ -137,20 +137,6 @@ function App() {
    *  Array of objects with the following keys:
    *  Plant, periods (an array of objects showing dates. For example march 15 - april 10: sow, april 10 - June 10 harvest, etc.)
    */
-
-  // [
-  //   {
-  //     id: uuidv4(),
-  //     create: getCurrentDateTimeAsId(),
-  //     plant: "Lettuce",
-  //     data: {
-  //       sow: ["01-01", "04-30"],
-  //       transplant: ["05-01", "07-31"],
-  //       grow: ["08-01", "09-01"],
-  //       harvest: ["09-01", "12-31"],
-  //     },
-  //   },
-  // ]
   const [calendarItems, setCalendarItems] = useState([]);
   const addCalendarItem = (item) => {
     const addObject = {
@@ -170,24 +156,6 @@ function App() {
   const handleCloseAddCalendar = () => {
     setShowAddCalendar(false);
   };
-
-  // const [showEditCalendar, setShowEditCalendar] = useState(false);
-  // const handleOpenEditCalendar = () => {
-  //   setShowEditCalendar(true);
-  // };
-  // const handleCloseEditCalendar = () => {
-  //   setShowEditCalendar(false);
-  // };
-
-  // const [editCalendarID, setEditCalendarID] = useState("");
-  // const resetEditCalendarID = () => {
-  //   setEditCalendarID("");
-  // };
-
-  // const editCalendar = (id) => {
-  //   handleOpenEditCalendar();
-  //   setEditCalendarID(id);
-  // };
 
   return (
     <div>
@@ -226,7 +194,6 @@ function App() {
             calendarList={calendarItems}
             setCalendarList={setCalendarItems}
             addCalendar={handleOpenAddCalendar}
-            // calendarEditable={editCalendar}
           />
         </Grid>
         <Grid item xs={4}>
@@ -263,6 +230,7 @@ function App() {
         showModal={showAddCalendar}
         handleCloseModal={handleCloseAddCalendar}
         addCalendarObj={addCalendarItem}
+        snackbar={showCustomSnackbar}
       />
       <Feedback
         feedbackKey={snackbarKey}
