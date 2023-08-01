@@ -11,6 +11,11 @@ GreenThumb Garden Assistant is a React-based web application built with Material
 - [Garden Calendar](#garden-calendar)
 - [Task Manager](#task-manager)
 
+🌉 [Architecture](#architecture)
+
+- [Tech Stack](#tech-stack)
+- [File System](#file-system)
+
 💾 [Installations](#installation)
 
 ✈️ [Deployment](#deployment)
