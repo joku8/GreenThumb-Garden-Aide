@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 
 import React, { useState } from "react";
-import verifyAndProcess from "../../utils/utils";
+import { verifyAndProcess } from "../../utils/utils";
 
 const boxStyle = {
   backgroundColor: "#ffffff", // White background

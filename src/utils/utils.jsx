@@ -13,11 +13,17 @@ const getCurrentDateTimeAsId = () => {
   return `${year}-${month}-${day}-${hours}-${minutes}-${seconds}`;
 };
 
-const generateSavePackage = (seedStorage, harvestBook, calendarItems) => {
+const generateSavePackage = (
+  seedStorage,
+  harvestBook,
+  calendarItems,
+  tasks
+) => {
   return JSON.stringify({
     seedStorage: seedStorage,
     harvestBook: harvestBook,
     calendarItems: calendarItems,
+    taskList: tasks,
   });
 };
 
@@ -112,13 +118,17 @@ const verifyObject = (obj) => {
   // Check if the object has 'seedStorage' and 'harvestBook' keys
   const hasSeedStorage = keys.includes("seedStorage");
   const hasHarvestBook = keys.includes("harvestBook");
+  const hasTaskList = keys.includes("taskList");
   const hasCalendarItems = keys.includes("calendarItems");
 
   // Return true if both keys are present, otherwise return false
-  return hasSeedStorage && hasHarvestBook && hasCalendarItems;
+  return hasSeedStorage && hasHarvestBook && hasCalendarItems && hasTaskList;
 };
 
 const formatDate = (dateString) => {
+  if (dateString === "") {
+    return "";
+  }
   const months = [
     "Jan",
     "Feb",
@@ -304,8 +314,6 @@ const verifyAndProcess = (obj, includes) => {
 
   return { status: true, content: { plant: obj.plant, data: verifiedData } };
 };
-
-export default verifyAndProcess;
 
 export {
   computeDates,

@@ -15,6 +15,7 @@ import { getCurrentDateTimeAsId } from "./utils/utils";
 import EditSeed from "./components/modal/EditSeed";
 import EditHarvest from "./components/modal/EditHarvest";
 import AddCalendar from "./components/modal/AddCalendar";
+import AddTask from "./components/modal/AddTask";
 
 function App() {
   // Global Snackbar
@@ -136,10 +137,20 @@ function App() {
     const addObject = {
       id: uuidv4(),
       create: getCurrentDateTimeAsId(),
-      
+      title: item.title,
+      due: item.due,
+      notes: "",
     };
     setTaskList((prev) => [...prev, addObject]);
     showCustomSnackbar("success", "Task added successfully ✅ !!!");
+  };
+
+  const [showAddTask, setShowAddTask] = useState(false);
+  const handleOpenAddTask = () => {
+    setShowAddTask(true);
+  };
+  const handleCloseAddTask = () => {
+    setShowAddTask(false);
   };
 
   /** Stores calendar items
@@ -175,6 +186,8 @@ function App() {
             seedBankSetter={setSeedBank}
             harvestBook={harvestBook}
             harvestBookSetter={setHarvestBook}
+            taskItems={taskList}
+            taskItemsSetter={setTaskList}
             calendarList={calendarItems}
             calendarListSetter={setCalendarItems}
             file={fileHandle}
@@ -206,7 +219,11 @@ function App() {
           />
         </Grid>
         <Grid item xs={4}>
-          <TaskManager tasks={taskList} setTasks={setTaskList} />
+          <TaskManager
+            tasks={taskList}
+            setTasks={setTaskList}
+            newTask={handleOpenAddTask}
+          />
         </Grid>
       </Grid>
       <AddSeed
@@ -234,6 +251,11 @@ function App() {
         setCollection={setHarvestBook}
         changeableID={editHarvestID}
         reset={resetEditHarvestID}
+      />
+      <AddTask
+        showModal={showAddTask}
+        handleCloseModal={handleCloseAddTask}
+        addTaskItem={addTask}
       />
       <AddCalendar
         showModal={showAddCalendar}
