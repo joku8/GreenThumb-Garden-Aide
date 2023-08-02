@@ -1,3 +1,6 @@
+import { withAuthenticator } from "@aws-amplify/ui-react";
+import "@aws-amplify/ui-react/styles.css";
+
 import { Grid } from "@mui/material";
 
 import React, { useState } from "react";
@@ -274,4 +277,4 @@ function App() {
   );
 }
 
-export default App;
+export default withAuthenticator(App);
