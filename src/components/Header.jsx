@@ -19,6 +19,7 @@ const styles = {
 };
 
 const Header = ({
+  signOff,
   seedBank,
   seedBankSetter,
   harvestBook,
@@ -118,14 +119,26 @@ const Header = ({
         alignItems="center"
         justifyContent="space-between"
       >
-        <Typography
-          variant="h2"
-          fontSize="40px"
-          fontWeight="lighter"
-          color="#ffffff"
+        <Stack
+          direction="row"
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          spacing={3}
         >
-          GreenThumb Garden Assistant
-        </Typography>
+          <Typography
+            variant="h2"
+            fontSize="40px"
+            fontWeight="lighter"
+            color="#ffffff"
+          >
+            GreenThumb Garden Assistant
+          </Typography>
+          <Button variant="contained" onClick={signOff}>
+            Sign Out
+          </Button>
+        </Stack>
+
         <Stack
           direction="row"
           display="flex"

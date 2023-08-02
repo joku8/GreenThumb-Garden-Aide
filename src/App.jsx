@@ -20,7 +20,7 @@ import EditHarvest from "./components/modal/EditHarvest";
 import AddCalendar from "./components/modal/AddCalendar";
 import AddTask from "./components/modal/AddTask";
 
-function App() {
+function App({ signOut }) {
   // Global Snackbar
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [severity, setSeverity] = useState("");
@@ -185,6 +185,7 @@ function App() {
       <Grid container spacing={3} padding="20px 40px 10px 40px">
         <Grid item xs={12}>
           <Header
+            signOff={signOut}
             seedBank={seedBank}
             seedBankSetter={setSeedBank}
             harvestBook={harvestBook}
