@@ -90,4 +90,4 @@ Now you're ready to start using GreenThumb Garden Assistant, built with MUI, and
 
 ## Deployment
 
-This web app is currently deployed via github pages. The app is live at [GreenThumb Garden Assistant](https://joku8.github.io/GreenThumb-Garden-Aide-WebApp/)
+This web app is currently deployed from this branch (amplify-main) via Amplify AWS and can be accessed at [GreenThumb Assistant](https://amplify-main...amplifyapp.com)
