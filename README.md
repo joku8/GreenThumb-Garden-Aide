@@ -90,4 +90,4 @@ Now you're ready to start using GreenThumb Garden Assistant, built with MUI, and
 
 ## Deployment
 
-This web app is currently deployed from this branch (amplify-main) via Amplify AWS and can be accessed at [GreenThumb Assistant](https://amplify-main...amplifyapp.com)
+This web app is currently deployed from this branch (amplify-main) via Amplify AWS and can be accessed at [GreenThumb Assistant](https://amplify-main.d2ayvnkie9xfiw.amplifyapp.com/)
