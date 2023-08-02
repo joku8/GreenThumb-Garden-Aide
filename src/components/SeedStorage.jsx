@@ -20,8 +20,8 @@ import "./contextMenu.css";
 import { objEquals } from "../utils/utils";
 
 const styles = {
-  width: "95%",
-  height: "350px",
+  width: "100%",
+  height: "400px",
   padding: "10px 20px 10px 20px",
   backgroundColor: "#f1f1f1",
   borderRadius: "20px",
@@ -101,7 +101,7 @@ const SeedStorage = ({ seeds, setSeeds, addSeed, seedEditable }) => {
           <Grid item xs={12}>
             <TableContainer
               component={Paper}
-              sx={{ height: "290px", overflow: "scroll" }}
+              sx={{ height: "310px", overflow: "scroll" }}
             >
               <Table stickyHeader size="small">
                 <TableHead>

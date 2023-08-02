@@ -18,7 +18,8 @@ import React, { useState, useEffect } from "react";
 import { formatDate } from "../utils/utils";
 
 const styles = {
-  height: "350px",
+  width: "100%",
+  height: "400px",
   padding: "10px 20px 10px 20px",
   backgroundColor: "#f1f1f1",
   borderRadius: "20px",
@@ -102,7 +103,7 @@ const HarvestTracker = ({
           <Grid item xs={12} sx={{ width: "100%" }}>
             <TableContainer
               component={Paper}
-              sx={{ height: "290px", overflow: "scroll" }}
+              sx={{ height: "310px", overflow: "scroll" }}
             >
               <Table stickyHeader size="small">
                 <TableHead>
